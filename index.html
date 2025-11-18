@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Nadu Collector Appointment System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="top-nav">
+        <a href="index.html">Home</a>
+        <a href="support.html">Support</a>
+    </nav>
+
+    <h1>Tamil Nadu Collector Appointment System</h1>
+
+    <form id="appointmentForm" onsubmit="return validateForm()">
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label>Select District</label>
+        <select id="district">
+            <option value="">-- Select District --</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Tiruchirappalli">Tiruchirappalli</option>
+            <option value="Salem">Salem</option>
+            <option value="Erode">Erode</option>
+            <option value="Tirunelveli">Tirunelveli</option>
+            <option value="Vellore">Vellore</option>
+            <option value="Thoothukudi">Thoothukudi</option>
+            <option value="Dindigul">Dindigul</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <label>Appointment Date</label>
+        <input type="date" id="date">
+
+        <label>Appointment Time</label>
+        <input type="time" id="time">
+
+        <button type="submit">Book Now</button>
+
+        <p id="message"></p>
+    </form>
+
+    <div id="submittedData"></div>
+
+</div>
+
+<script>
+const dateInput = document.getElementById('date');
+dateInput.min = new Date().toISOString().split("T")[0];
+
+function validateForm() {
+    let name = document.getElementById('name').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let district = document.getElementById('district').value;
+    let date = document.getElementById('date').value;
+    let time = document.getElementById('time').value;
+    let message = document.getElementById('message');
+    let output = document.getElementById('submittedData');
+
+    message.textContent = "";
+    output.style.display = "none";
+
+    if (!name) { message.textContent = "Please enter your full name."; message.style.color="red"; return false; }
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { message.textContent = "Enter a valid email"; message.style.color="red"; return false; }
+    if (!district) { message.textContent = "Select your district."; message.style.color="red"; return false; }
+    if (!date) { message.textContent = "Choose date."; message.style.color="red"; return false; }
+    if (!time) { message.textContent = "Choose time."; message.style.color="red"; return false; }
+
+    alert("🎉 Appointment Booked Successfully!");
+
+    message.textContent = "Appointment booked successfully!";
+    message.style.color = "green";
+
+    output.style.display = "block";
+    output.innerHTML = `
+        <h3>Your Appointment Details</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>District:</b> ${district}</p>
+        <p><b>Date:</b> ${date}</p>
+        <p><b>Time:</b> ${time}</p>
+    `;
+
+    document.getElementById('appointmentForm').reset();
+    dateInput.min = new Date().toISOString().split("T")[0];
+
+    return false;
+}
+</script>
+
+</body>
+</html>
